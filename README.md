@@ -1,0 +1,33 @@
+# authfly/stalwart — internal Stalwart infrastructure
+
+Not a product package. This repo holds everything about the Stalwart side of Authfly:
+
+| Path | What |
+|---|---|
+| `docker-compose.yml`, `deploy/` | Stalwart dev stack: Stalwart v0.16, init-stalwart, Authfly (built from the pinned authfly/cli), Console. Fixed dev secrets, plain HTTP. |
+| `apps/console` | Authfly Console: a schema-driven configurator for the whole Stalwart management surface. It runs on loopback only and is shipped by the authfly/cli release channel. |
+| `tools/stalwart-audit.py`, `tools/stalwart-api-doc.py` | JMAP management API audit: live schema, permissions, probes → `docs/api-capture/`, `docs/stalwart-api.md`. |
+| `docs/` | `stalwart-api.md`, `stalwart.md` (install/hardening), `verification.md`, `console.md`. |
+| `e2e/`, `tools/e2e-compat.sh` | Compat suites: Console e2e + API audit against a live Stalwart. |
+
+## The shared Go JMAP client lives in authfly/cli
+
+`server/core` in **authfly/cli** owns the Stalwart JMAP client and the hardening (`Harden`, `init-stalwart`). This
+repo imports it (`github.com/authfly/cli/server/core`, pinned in `deps.lock`). Reasons:
+
+1. The product needs it at runtime: `authfly deploy` runs init-stalwart, and the server talks JMAP on every sign-up.
+   This repo only needs it for tooling.
+2. Dependencies point from internal tooling to the product, never back. A Stalwart API change is fixed and released
+   in one place, and the compat suites here catch it.
+3. A third "jmap" module would add a version to pin in both repos with no consumer outside them.
+
+## Build and test
+
+```sh
+bash tools/deps.sh                      # .deps/cli + .deps/authkit at the pinned commits
+go build ./... && go vet ./... && go test ./...
+bun install
+bash tools/e2e-compat.sh <deploy dir>   # or the dev stack: docker compose up -d --build && bash tools/e2e-compat.sh
+```
+
+MIT, © Auth Fly

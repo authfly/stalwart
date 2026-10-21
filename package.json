@@ -1,0 +1,13 @@
+{
+  "name": "authfly-stalwart",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deps": "bash tools/deps.sh",
+    "console:css": "tailwindcss -i apps/console/app.css -o apps/console/assets/app.css --minify",
+    "console": "go run github.com/a-h/templ/cmd/templ@v0.3.1070 generate -path apps/console && bun run console:css && go run ./apps/console",
+    "test": "bash tools/deps.sh && go vet ./... && go test ./...",
+    "compat": "bash tools/e2e-compat.sh"
+  },
+  "devDependencies": { "@tailwindcss/cli": "^4.1.0", "tailwindcss": "^4.1.0" }
+}
