@@ -18,5 +18,7 @@ cd "$root"
 fail=0
 echo "== console"; bun e2e/console.test.ts 2>&1 | tail -${E2E_TAIL:-40} || fail=1
 echo "== stalwart-audit"; python3 tools/stalwart-audit.py 2>&1 | tail -5 || fail=1
-git diff --stat -- docs/api-capture/schema.json
+if git diff --quiet -- docs/api-capture/schema.json; then echo "stalwart API schema: unchanged (compatible)"; else echo "stalwart API schema CHANGED:"; git diff --stat -- docs/api-capture/schema.json; fail=1; fi
+# probe.json holds live sample data (ids, test accounts): keep the committed one unless AUDIT_KEEP=1
+[ -n "${AUDIT_KEEP:-}" ] || git checkout -q -- docs/api-capture/probe.json docs/stalwart-api.md
 exit $fail
