@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	selectx "github.com/ui8kit/codegen/packages/templ/ui/ui/select"
+	selectx "github.com/authfly/authkit/widgets/templ/ui/select"
 )
 
 func iconOr(s string) string {
@@ -132,4 +132,15 @@ func inputAttrs(f Field) templ.Attributes {
 		}
 	}
 	return a
+}
+
+func mergeAttrs(a, b templ.Attributes) templ.Attributes {
+	out := templ.Attributes{}
+	for k, v := range a {
+		out[k] = v
+	}
+	for k, v := range b {
+		out[k] = v
+	}
+	return out
 }
