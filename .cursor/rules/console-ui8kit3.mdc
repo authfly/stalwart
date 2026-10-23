@@ -1,0 +1,5 @@
+---
+description: Authfly Console UI rules (UI8Kit 3)
+globs: apps/console/**
+---
+See AGENTS.md. Build UI from authkit templ primitives + `ui.templ` composites, className/tokens only. Icons via `icon-names.txt` + `tools/gen-console-icons.ts`. Regenerate templ and CSS after edits; restore `console` binary before commit.
