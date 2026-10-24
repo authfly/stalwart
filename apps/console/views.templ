@@ -104,7 +104,7 @@ templ navTree(p PageVM) {
 						{ g.Title }
 					}
 				}
-				@box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-1"}) {
+				@box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-2"}) {
 					for _, it := range g.Items {
 						@box.Box(box.BoxProps{Tag: "li"}) {
 							@link.Link(link.LinkProps{Href: it.View, Class: navLinkClass(it.View == p.Current)}) {
@@ -254,7 +254,7 @@ templ oneBlock(b Block, csrf string) {
 						}
 					}
 					if len(b.Items) > 0 {
-						@box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-1"}) {
+						@box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-2"}) {
 							for _, it := range b.Items {
 								@box.Box(box.BoxProps{Tag: "li", Class: "text-sm"}) {
 									{ "- " + it }
@@ -371,7 +371,7 @@ templ blockBody(b Block, csrf string) {
 	}
 	if b.Code != "" {
 		@box.Box(box.BoxProps{Class: "max-h-screen overflow-auto rounded-md border border-border bg-muted p-4"}) {
-			@text.Text(text.TextProps{Tag: "pre", Class: "font-mono text-xs", Attrs: templ.Attributes{"data-testid": "code"}}) {
+			@text.Text(text.TextProps{Tag: "pre", Class: "text-xs", Attrs: templ.Attributes{"data-testid": "code"}}) {
 				{ b.Code }
 			}
 		}
@@ -488,7 +488,7 @@ templ fieldView(f Field) {
 					case "enum", "ref", "select":
 						@selectx.Select(selectx.SelectProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Options: selOpts(f), Required: f.Required, Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: selectClass})
 					case "json", "textarea":
-						@textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass, "font-mono text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false"}})
+						@textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass, "text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false", "data-code": "true"}})
 					case "readonly":
 						@input.Input(input.InputProps{ID: "f-" + f.Name, Value: optStr(f.Value), Disabled: true, Class: controlClass})
 					default:

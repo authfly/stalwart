@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 // Console middle layer on the UI8Kit 3 templ primitives (authkit packages/ui/templ): card, alert, badge, table,
 // controls and Lucide icons, composed with className + tokens only (the xgen card/table/alert/badge bricks are gone in
-// v3). Classes keep the look of the former bricks. Text is always passed as props or { } (escaped).
+// v3). Card, alert, badge and button take the authkit Authfly skin (af.*Skin), so ring/control classes stay in the kit. Text is always passed as props or { } (escaped).
 
 import (
 	af "github.com/authfly/authkit/packages/ui/templ/authfly"
@@ -123,7 +123,7 @@ func uiCard(class string, attrs templ.Attributes) templ.Component {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = box.Box(box.BoxProps{Class: uiutils.Cn("flex flex-col gap-8 rounded bg-card p-6 text-card-foreground inset-ring inset-ring-border", class), Attrs: attrs}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = box.Box(box.BoxProps{Class: af.CardSkin("mx-0 max-w-none gap-8", class), Attrs: attrs}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -329,17 +329,8 @@ func uiCardContent(class string) templ.Component {
 	})
 }
 
-func alertClass(tone string) string {
-	if tone == "destructive" {
-		return "flex min-h-8 items-center gap-2 rounded bg-muted px-2 text-xs font-semibold text-destructive inset-ring inset-ring-destructive"
-	}
-	if tone == "success" || tone == "warning" {
-		return "flex min-h-8 items-center gap-2 rounded bg-muted px-2 text-xs font-semibold text-foreground inset-ring inset-ring-border"
-	}
-	return "flex min-h-8 items-center gap-2 rounded bg-card px-2 text-xs font-semibold text-card-foreground inset-ring inset-ring-border"
-}
-
-// uiAlert: role alert for destructive/warning, status otherwise; aria-live polite.
+// uiAlert: the Authfly alert skin (tone default | success | warning | destructive; only destructive changes the colours);
+// role alert for destructive/warning, status otherwise; aria-live polite.
 func uiAlert(tone string, attrs templ.Attributes) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -379,7 +370,7 @@ func uiAlert(tone string, attrs templ.Attributes) templ.Component {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = box.Box(box.BoxProps{Class: alertClass(tone), Attrs: mergeAttrs(templ.Attributes{"role": alertRole(tone), "aria-live": "polite", "data-slot": "alert"}, attrs)}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var16), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = box.Box(box.BoxProps{Class: af.AlertSkin(tone), Attrs: mergeAttrs(templ.Attributes{"role": alertRole(tone), "aria-live": "polite", "data-slot": "alert"}, attrs)}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var16), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -387,17 +378,13 @@ func uiAlert(tone string, attrs templ.Attributes) templ.Component {
 	})
 }
 
+// badgeClass: the Authfly badge skin (h-6 px-2); size sm is h-5.
 func badgeClass(variant, size, class string) string {
-	sz := "h-6 px-3 text-xs"
+	sz := ""
 	if size == "sm" {
-		sz = "h-5 px-2 text-xs"
+		sz = "h-5"
 	}
-	v := map[string]string{
-		"default":   "bg-primary text-primary-foreground inset-ring-primary",
-		"secondary": "bg-muted text-foreground inset-ring-transparent",
-		"outline":   "bg-transparent text-foreground inset-ring-border",
-	}[nonEmpty(variant, "default")]
-	return uiutils.Cn("inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full font-medium inset-ring", sz, v, class)
+	return af.BadgeSkin(nonEmpty(variant, "default"), sz, class)
 }
 
 func uiBadge(variant, size, class, label string) templ.Component {
@@ -436,7 +423,7 @@ func uiBadge(variant, size, class, label string) templ.Component {
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui.templ`, Line: 94, Col: 9}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui.templ`, Line: 81, Col: 9}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {
@@ -452,10 +439,10 @@ func uiBadge(variant, size, class, label string) templ.Component {
 	})
 }
 
-// btnClass: the Authfly button skin plus the sm size of the former brick.
+// btnClass: the Authfly button skin; size sm is h-8 (the skin keeps px-4).
 func btnClass(variant, size, class string) string {
 	if size == "sm" {
-		return af.ButtonSkin(nonEmpty(variant, "default"), uiutils.Cn("h-8 px-3", class))
+		return af.ButtonSkin(nonEmpty(variant, "default"), uiutils.Cn("h-8", class))
 	}
 	return af.ButtonSkin(nonEmpty(variant, "default"), class)
 }

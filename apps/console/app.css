@@ -8,3 +8,5 @@
 /* page body: full height, smoothed text (plain CSS, kept out of class lists) */
 body { min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 pre { white-space: pre-wrap; word-break: break-word; }
+/* JSON / code fields: the theme mono font token (pre gets it from preflight) */
+textarea[data-code] { font-family: var(--font-mono); }

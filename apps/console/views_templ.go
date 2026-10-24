@@ -637,7 +637,7 @@ func navTree(p PageVM) templ.Component {
 						}
 						return nil
 					})
-					templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-1"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var28), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-2"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var28), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -1440,7 +1440,7 @@ func oneBlock(b Block, csrf string) templ.Component {
 							}
 							return nil
 						})
-						templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-1"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var67), templ_7745c5c3_Buffer)
+						templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "ul", Class: "flex flex-col gap-2"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var67), templ_7745c5c3_Buffer)
 						if templ_7745c5c3_Err != nil {
 							return templ_7745c5c3_Err
 						}
@@ -2151,7 +2151,7 @@ func blockBody(b Block, csrf string) templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = text.Text(text.TextProps{Tag: "pre", Class: "font-mono text-xs", Attrs: templ.Attributes{"data-testid": "code"}}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var108), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = text.Text(text.TextProps{Tag: "pre", Class: "text-xs", Attrs: templ.Attributes{"data-testid": "code"}}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var108), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -2784,7 +2784,7 @@ func fieldView(f Field) templ.Component {
 						return templ_7745c5c3_Err
 					}
 				case "json", "textarea":
-					templ_7745c5c3_Err = textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass, "font-mono text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false"}}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass, "text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false", "data-code": "true"}}).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
