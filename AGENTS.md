@@ -4,6 +4,7 @@
 - Composites in `apps/console/ui.templ`: className/tokens only, no new CSS beyond `apps/console/app.css` Tailwind entry.
 - Icons: edit `apps/console/icon-names.txt`, then `bun tools/gen-console-icons.ts <lucide-dir>`; never hand-edit `lucide_icons.go`.
 - After editing `.templ`: `templ generate -path apps/console`, `bun run console:css`, `bun run test` (go vet, go test, `npx ui8px@0.2.5 lint` against `.ui8px/policy`: 8px steps in layout, no own `inset-ring*`/4px classes in Console; use `af.*Skin`).
+- Markup rule (Tailwind utilities + shadcn tokens, ui8px variants only, 8+4, base CSS for the rest): `.cursor/rules/tailwind-tokens-ui8px.mdc`.
 - `go build ./...` overwrites the committed `console` binary — restore with `git checkout console` before committing.
 - Pins: `tools/deps.sh --bump <authkit|cli>`; e2e needs docker (`tools/e2e-compat.sh`).
 - Push only when asked; never force-push or rewrite history.
