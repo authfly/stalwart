@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	selectx "github.com/authfly/authkit/widgets/templ/ui/select"
+	selectx "github.com/authfly/authkit/packages/ui/templ/ui/select"
 )
 
 func iconOr(s string) string {
