@@ -57,7 +57,7 @@ templ loginView(csrf, errMsg string) {
 				}
 				@uiCardContent("") {
 					@form.Form(form.FormProps{Action: "/login", Method: "post", Class: "flex flex-col gap-4", Attrs: templ.Attributes{"data-testid": "login-form"}}) {
-						@input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: csrf})
+						@input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: &csrf})
 						if errMsg != "" {
 							@uiAlert("destructive", nil) {
 								@text.Text(text.TextProps{Class: "text-sm"}) {
@@ -127,7 +127,7 @@ templ layout(p PageVM) {
 					@uiBadge("outline", "", "hidden md:inline-flex", p.User)
 					@themeToggle()
 					@form.Form(form.FormProps{Action: "/logout", Method: "post"}) {
-						@input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: p.Csrf})
+						@input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: &p.Csrf})
 						@button.Button(button.ButtonProps{Type: "submit", Class: btnClass("ghost", "sm", ""), Attrs: templ.Attributes{"data-testid": "logout"}}) {
 							@lucide("log-out", "sm", "")
 							@text.Text(text.TextProps{Tag: "span", Class: "sr-only md:not-sr-only"}) {
@@ -429,9 +429,9 @@ templ dataTable(t Table) {
 
 templ formView(f FormVM, csrf string) {
 	@form.Form(form.FormProps{ID: f.ID, Action: f.Action, Method: "post", Class: formClass(f.Inline), Attrs: templ.Attributes{"data-testid": "form-" + f.ID}}) {
-		@input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: csrf})
+		@input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: &csrf})
 		for _, h := range f.Hidden {
-			@input.Input(input.InputProps{Type: "hidden", Name: h[0], Value: h[1]})
+			@input.Input(input.InputProps{Type: "hidden", Name: h[0], Value: &h[1]})
 		}
 		for _, fl := range f.Fields {
 			@fieldView(fl)
@@ -460,7 +460,7 @@ templ fieldView(f Field) {
 	switch f.Kind {
 		case "bool":
 			@af.Group("2", "start", "", "", nil) {
-				@checkbox.Checkbox(checkbox.CheckboxProps{ID: "f-" + f.Name, Name: f.Name, Value: "true", Checked: f.Value == "true", Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: af.CheckboxSkin()})
+				@checkbox.Checkbox(checkbox.CheckboxProps{ID: "f-" + f.Name, Name: f.Name, Value: strPtr("true"), Checked: f.Value == "true", Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: af.CheckboxSkin()})
 				@af.Stack("0", "", "", "", nil) {
 					@label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass}) {
 						{ f.Label }
@@ -490,9 +490,9 @@ templ fieldView(f Field) {
 					case "json", "textarea":
 						@textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass, "font-mono text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false"}})
 					case "readonly":
-						@input.Input(input.InputProps{ID: "f-" + f.Name, Value: f.Value, Disabled: true, Class: controlClass})
+						@input.Input(input.InputProps{ID: "f-" + f.Name, Value: optStr(f.Value), Disabled: true, Class: controlClass})
 					default:
-						@input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: f.Value, Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass})
+						@input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: optStr(f.Value), Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass})
 				}
 				@fieldHelp(f)
 			}

@@ -22,6 +22,17 @@ func alertRole(t string) string {
 	return "status"
 }
 
+// strPtr / optStr: InputProps.Value and CheckboxProps.Value are *string (registry 3.2.2): nil = no value attribute.
+// Hidden inputs always carry their value (&v, an empty one included); form controls keep "no attribute" for "".
+func strPtr(s string) *string { return &s }
+
+func optStr(s string) *string {
+	if s == "" {
+		return nil
+	}
+	return &s
+}
+
 func nonEmpty(a, b string) string {
 	if a != "" {
 		return a

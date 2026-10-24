@@ -275,7 +275,7 @@ func loginView(csrf, errMsg string) templ.Component {
 								}()
 							}
 							ctx = templ.InitializeContext(ctx)
-							templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: csrf}).Render(ctx, templ_7745c5c3_Buffer)
+							templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: &csrf}).Render(ctx, templ_7745c5c3_Buffer)
 							if templ_7745c5c3_Err != nil {
 								return templ_7745c5c3_Err
 							}
@@ -751,7 +751,7 @@ func layout(p PageVM) templ.Component {
 								}()
 							}
 							ctx = templ.InitializeContext(ctx)
-							templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: p.Csrf}).Render(ctx, templ_7745c5c3_Buffer)
+							templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: &p.Csrf}).Render(ctx, templ_7745c5c3_Buffer)
 							if templ_7745c5c3_Err != nil {
 								return templ_7745c5c3_Err
 							}
@@ -2484,12 +2484,12 @@ func formView(f FormVM, csrf string) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: csrf}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: "csrf", Value: &csrf}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			for _, h := range f.Hidden {
-				templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: h[0], Value: h[1]}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = input.Input(input.InputProps{Type: "hidden", Name: h[0], Value: &h[1]}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -2634,7 +2634,7 @@ func fieldView(f Field) templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				templ_7745c5c3_Err = checkbox.Checkbox(checkbox.CheckboxProps{ID: "f-" + f.Name, Name: f.Name, Value: "true", Checked: f.Value == "true", Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: af.CheckboxSkin()}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = checkbox.Checkbox(checkbox.CheckboxProps{ID: "f-" + f.Name, Name: f.Name, Value: strPtr("true"), Checked: f.Value == "true", Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: af.CheckboxSkin()}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -2789,12 +2789,12 @@ func fieldView(f Field) templ.Component {
 						return templ_7745c5c3_Err
 					}
 				case "readonly":
-					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Value: f.Value, Disabled: true, Class: controlClass}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Value: optStr(f.Value), Disabled: true, Class: controlClass}).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 				default:
-					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: f.Value, Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: optStr(f.Value), Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass}).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
