@@ -30,7 +30,7 @@ templ lucide(name, size, class string) {
 }
 
 templ uiCard(class string, attrs templ.Attributes) {
-	@box.Box(box.BoxProps{Class: af.CardSkin("mx-0 max-w-none gap-8", class), Attrs: attrs}) {
+	@box.Box(box.BoxProps{Class: af.CardSkin("gap-8", class), Attrs: attrs}) {
 		{ children... }
 	}
 }
@@ -59,7 +59,8 @@ templ uiCardContent(class string) {
 	}
 }
 
-// uiAlert: the Authfly alert skin (tone default | success | warning | destructive; only destructive changes the colours);
+// uiAlert: the Authfly alert skin (tone default | success | warning | destructive; success, warning and destructive recolour
+// text + ring with the authkit --success / --warning / --destructive tokens);
 // role alert for destructive/warning, status otherwise; aria-live polite.
 templ uiAlert(tone string, attrs templ.Attributes) {
 	@box.Box(box.BoxProps{Class: af.AlertSkin(tone), Attrs: mergeAttrs(templ.Attributes{"role": alertRole(tone), "aria-live": "polite", "data-slot": "alert"}, attrs)}) {
