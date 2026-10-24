@@ -6,4 +6,4 @@
 - After editing `.templ`: `templ generate -path apps/console`, `bun run console:css`, `go vet ./... && go test ./...`.
 - `go build ./...` overwrites the committed `console` binary — restore with `git checkout console` before committing.
 - Pins: `tools/deps.sh --bump <authkit|cli>`; e2e needs docker (`tools/e2e-compat.sh`).
-- Never push; never rewrite history.
+- Push only when asked; never force-push or rewrite history.

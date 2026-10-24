@@ -33,11 +33,11 @@ Captured live from `stalwartlabs/stalwart:v0.16` (community edition) at 2026-10-
 | Need | Stalwart surface | Status |
 |---|---|---|
 | Export (Art. 15, 20) | JMAP as the user or with `impersonate`: `Mailbox/get`, `Email/query` + `Email/get` (+ blobs), `Identity/get`, `SieveScript/*`, `AddressBook`/`ContactCard`, `Calendar`/`CalendarEvent`, `VacationResponse`; `x:Account/get` for the directory record | live (Authfly export uses x:Account + Mailbox + Email + Identity) |
-| Erasure (Art. 17) | `x:Account/set destroy` removes the account and its data; `x:DataRetention.archiveDeletedAccountsFor` (null = no archive) decides whether a copy is kept; `x:ArchivedItem` (Enterprise) lists archives | live (see docs/gdpr.md for the verification) |
+| Erasure (Art. 17) | `x:Account/set destroy` removes the account and its data; `x:DataRetention.archiveDeletedAccountsFor` (null = no archive) decides whether a copy is kept; `x:ArchivedItem` (Enterprise) lists archives | live (see authfly/cli docs/gdpr.md for the verification) |
 | Retention (Art. 5(1)(e)) | `x:DataRetention`: trash and submission expunge, `holdTracesFor`, `holdMetricsFor`, `holdMtaReportsFor`, archive periods; schedules | live |
 | Audit log (Art. 30, 32) | `x:Log` (needs a log store), `x:Trace` (Enterprise), webhooks `x:WebHook`; Authfly keeps its own append-only audit log | live: Stalwart logs not stored in the dev stack |
 | Consent records (Art. 7) | none in Stalwart; Authfly stores consent records (OIDC consent, terms at sign-up) | Authfly |
-| Encryption at rest (Art. 32) | `x:Email.encryptAtRest` (allow), per account `encryptionAtRest` (`Aes128`, `Aes256` OpenPGP or S/MIME with the user's `publicKey`, `encryptOnAppend`); disk/database encryption is outside Stalwart | live (settings); see docs/gdpr.md |
+| Encryption at rest (Art. 32) | `x:Email.encryptAtRest` (allow), per account `encryptionAtRest` (`Aes128`, `Aes256` OpenPGP or S/MIME with the user's `publicKey`, `encryptOnAppend`); disk/database encryption is outside Stalwart | live (settings); see authfly/cli docs/gdpr.md |
 | Access restriction (Art. 32) | roles (`x:Role`), permissions, tenants (`x:Tenant`), `x:Security` bans, `x:AllowedIp`/`x:BlockedIp`, `x:Http.allowedEndpoints` | live |
 
 

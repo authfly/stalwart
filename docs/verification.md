@@ -23,4 +23,4 @@ Authfly only uses Stalwart APIs and settings it found in the Stalwart documentat
 - Registered OAuth clients in Stalwart: in the tested setup any client id and `http` redirect URIs were accepted; behavior with registered clients and strict redirect checks was not tested.
 - Authenticated SMTP submission (587/465) through Authfly's mailer: implemented, tested only against port 25.
 - Production TLS (HTTPS issuer, SMTP TLS) and DNS (MX, SPF, DKIM, DMARC).
-- Social login, TOTP and WebAuthn are stubs ([Extensions](extensions.md)).
+- Social login, TOTP and WebAuthn are stubs ([Extensions](https://github.com/authfly/cli/blob/main/docs/extensions.md)).

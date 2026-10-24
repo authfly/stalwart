@@ -7,7 +7,7 @@ Not a product package. This repo holds everything about the Stalwart side of Aut
 | `docker-compose.yml`, `deploy/` | Stalwart dev stack: Stalwart v0.16, init-stalwart, Authfly (built from the pinned authfly/cli), Console. Fixed dev secrets, plain HTTP. |
 | `apps/console` | Authfly Console: a schema-driven configurator for the whole Stalwart management surface. It runs on loopback only and is shipped by the authfly/cli release channel. |
 | `tools/stalwart-audit.py`, `tools/stalwart-api-doc.py` | JMAP management API audit: live schema, permissions, probes → `docs/api-capture/`, `docs/stalwart-api.md`. |
-| `docs/` | `stalwart-api.md`, `stalwart.md` (install/hardening), `verification.md`, `console.md` (UI: UI8Kit 3 primitives, see AGENTS.md). |
+| `docs/` | `stalwart-api.md`, `stalwart.md` (install/hardening), `verification.md`, `console.md` (UI: UI8Kit 3 primitives, see [AGENTS.md](AGENTS.md)). |
 | `e2e/`, `tools/e2e-compat.sh` | Compat suites: Console e2e + API audit against a live Stalwart. |
 
 ## The shared Go JMAP client lives in authfly/cli
