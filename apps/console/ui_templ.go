@@ -536,11 +536,11 @@ func themeToggle() templ.Component {
 	})
 }
 
-const (
-	controlClass  = "h-10 w-full min-w-0 rounded bg-background px-3 text-base text-foreground inset-ring inset-ring-input outline-none placeholder:text-muted-foreground focus-visible:inset-ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-	selectClass   = "h-10 w-full min-w-0 rounded bg-background px-3 text-sm text-foreground inset-ring inset-ring-input outline-none focus-visible:inset-ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-	textareaClass = "min-h-20 w-full min-w-0 rounded bg-background px-3 py-2 text-base text-foreground inset-ring inset-ring-input outline-none placeholder:text-muted-foreground focus-visible:inset-ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-	labelClass    = "text-sm font-semibold text-foreground"
-)
+// Form controls take the authkit Authfly skin (af.InputSkin / af.LabelSkin): ring, 4px control padding and placeholder
+// stay in the kit. Select is a single-line field (text-sm); textarea grows from min-h-20 with py-2 (8px step).
+func controlClass() string  { return af.InputSkin() }
+func selectClass() string   { return af.InputSkin("text-sm") }
+func textareaClass() string { return af.InputSkin("h-auto min-h-20 py-2") }
+func labelClass() string    { return af.LabelSkin() }
 
 var _ = templruntime.GeneratedTemplate

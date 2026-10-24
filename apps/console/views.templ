@@ -66,16 +66,16 @@ templ loginView(csrf, errMsg string) {
 							}
 						}
 						@af.Stack("2", "", "", "", nil) {
-							@label.Label(label.LabelProps{For: "username", Class: labelClass}) {
+							@label.Label(label.LabelProps{For: "username", Class: labelClass()}) {
 								Username
 							}
-							@input.Input(input.InputProps{ID: "username", Name: "username", Required: true, Class: controlClass, Attrs: templ.Attributes{"autocomplete": "username"}})
+							@input.Input(input.InputProps{ID: "username", Name: "username", Required: true, Class: controlClass(), Attrs: templ.Attributes{"autocomplete": "username"}})
 						}
 						@af.Stack("2", "", "", "", nil) {
-							@label.Label(label.LabelProps{For: "password", Class: labelClass}) {
+							@label.Label(label.LabelProps{For: "password", Class: labelClass()}) {
 								Password
 							}
-							@input.Input(input.InputProps{ID: "password", Name: "password", Type: "password", Required: true, Class: controlClass, Attrs: templ.Attributes{"autocomplete": "current-password"}})
+							@input.Input(input.InputProps{ID: "password", Name: "password", Type: "password", Required: true, Class: controlClass(), Attrs: templ.Attributes{"autocomplete": "current-password"}})
 						}
 						@button.Button(button.ButtonProps{Type: "submit", Class: btnClass("", "", "w-full")}) {
 							Sign in
@@ -138,16 +138,16 @@ templ layout(p PageVM) {
 				}
 			}
 		}
-		@box.Box(box.BoxProps{Class: "mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 lg:flex-row"}) {
-			@box.Box(box.BoxProps{Tag: "aside", Class: "hidden w-64 lg:block"}) {
+		@box.Box(box.BoxProps{Class: "mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 lg:grid lg:grid-cols-4"}) {
+			@box.Box(box.BoxProps{Tag: "aside", Class: "hidden lg:col-span-1 lg:block"}) {
 				@box.Box(box.BoxProps{Tag: "nav", Class: "sticky top-20 max-h-screen overflow-auto pb-24", Attrs: templ.Attributes{"aria-label": "Console"}}) {
 					@navTree(p)
 				}
 			}
-			@box.Box(box.BoxProps{Tag: "main", Class: "flex min-w-0 flex-1 flex-col gap-6"}) {
+			@box.Box(box.BoxProps{Tag: "main", Class: "flex min-w-0 flex-col gap-6 lg:col-span-3"}) {
 				@box.Box(box.BoxProps{Tag: "nav", Class: "lg:hidden", Attrs: templ.Attributes{"aria-label": "Console sections"}}) {
 					@form.Form(form.FormProps{Action: "/go", Method: "get", Class: "flex gap-2"}) {
-						@selectx.Select(selectx.SelectProps{Name: "to", Value: p.Current, Options: mobileNav(p.Nav), Class: uiutils.Cn(selectClass, "w-full"), Attrs: templ.Attributes{"aria-label": "Go to"}})
+						@selectx.Select(selectx.SelectProps{Name: "to", Value: p.Current, Options: mobileNav(p.Nav), Class: uiutils.Cn(selectClass(), "w-full"), Attrs: templ.Attributes{"aria-label": "Go to"}})
 						@button.Button(button.ButtonProps{Type: "submit", Class: btnClass("outline", "", "")}) {
 							Go
 						}
@@ -409,7 +409,7 @@ templ dataTable(t Table) {
 					for _, r := range t.Rows {
 						@box.Box(box.BoxProps{Tag: "tr", Class: "border-b border-border"}) {
 							for i, c := range r.Cells {
-								@box.Box(box.BoxProps{Tag: "td", Class: "px-2 py-2 align-middle max-w-xs truncate"}) {
+								@box.Box(box.BoxProps{Tag: "td", Class: "px-2 py-2 align-middle max-w-sm truncate"}) {
 									if i == 0 && r.Href != "" {
 										@link.Link(link.LinkProps{Href: r.Href, Class: "font-medium underline-offset-4 hover:underline"}) {
 											{ nonEmpty(c, "(open)") }
@@ -462,7 +462,7 @@ templ fieldView(f Field) {
 			@af.Group("2", "start", "", "", nil) {
 				@checkbox.Checkbox(checkbox.CheckboxProps{ID: "f-" + f.Name, Name: f.Name, Value: strPtr("true"), Checked: f.Value == "true", Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: af.CheckboxSkin()})
 				@af.Stack("0", "", "", "", nil) {
-					@label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass}) {
+					@label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass()}) {
 						{ f.Label }
 					}
 					@fieldHelp(f)
@@ -471,7 +471,7 @@ templ fieldView(f Field) {
 		default:
 			@af.Stack("2", "", "", "min-w-0", nil) {
 				@af.Group("2", "center", "", "flex-wrap", nil) {
-					@label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass}) {
+					@label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass()}) {
 						{ f.Label }
 					}
 					if f.Required {
@@ -486,13 +486,13 @@ templ fieldView(f Field) {
 				}
 				switch f.Kind {
 					case "enum", "ref", "select":
-						@selectx.Select(selectx.SelectProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Options: selOpts(f), Required: f.Required, Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: selectClass})
+						@selectx.Select(selectx.SelectProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Options: selOpts(f), Required: f.Required, Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: selectClass()})
 					case "json", "textarea":
-						@textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass, "text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false", "data-code": "true"}})
+						@textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass(), "text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false", "data-code": "true"}})
 					case "readonly":
-						@input.Input(input.InputProps{ID: "f-" + f.Name, Value: optStr(f.Value), Disabled: true, Class: controlClass})
+						@input.Input(input.InputProps{ID: "f-" + f.Name, Value: optStr(f.Value), Disabled: true, Class: controlClass()})
 					default:
-						@input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: optStr(f.Value), Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass})
+						@input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: optStr(f.Value), Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass()})
 				}
 				@fieldHelp(f)
 			}

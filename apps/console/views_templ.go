@@ -360,11 +360,11 @@ func loginView(csrf, errMsg string) templ.Component {
 									}
 									return nil
 								})
-								templ_7745c5c3_Err = label.Label(label.LabelProps{For: "username", Class: labelClass}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var18), templ_7745c5c3_Buffer)
+								templ_7745c5c3_Err = label.Label(label.LabelProps{For: "username", Class: labelClass()}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var18), templ_7745c5c3_Buffer)
 								if templ_7745c5c3_Err != nil {
 									return templ_7745c5c3_Err
 								}
-								templ_7745c5c3_Err = input.Input(input.InputProps{ID: "username", Name: "username", Required: true, Class: controlClass, Attrs: templ.Attributes{"autocomplete": "username"}}).Render(ctx, templ_7745c5c3_Buffer)
+								templ_7745c5c3_Err = input.Input(input.InputProps{ID: "username", Name: "username", Required: true, Class: controlClass(), Attrs: templ.Attributes{"autocomplete": "username"}}).Render(ctx, templ_7745c5c3_Buffer)
 								if templ_7745c5c3_Err != nil {
 									return templ_7745c5c3_Err
 								}
@@ -404,11 +404,11 @@ func loginView(csrf, errMsg string) templ.Component {
 									}
 									return nil
 								})
-								templ_7745c5c3_Err = label.Label(label.LabelProps{For: "password", Class: labelClass}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var20), templ_7745c5c3_Buffer)
+								templ_7745c5c3_Err = label.Label(label.LabelProps{For: "password", Class: labelClass()}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var20), templ_7745c5c3_Buffer)
 								if templ_7745c5c3_Err != nil {
 									return templ_7745c5c3_Err
 								}
-								templ_7745c5c3_Err = input.Input(input.InputProps{ID: "password", Name: "password", Type: "password", Required: true, Class: controlClass, Attrs: templ.Attributes{"autocomplete": "current-password"}}).Render(ctx, templ_7745c5c3_Buffer)
+								templ_7745c5c3_Err = input.Input(input.InputProps{ID: "password", Name: "password", Type: "password", Required: true, Class: controlClass(), Attrs: templ.Attributes{"autocomplete": "current-password"}}).Render(ctx, templ_7745c5c3_Buffer)
 								if templ_7745c5c3_Err != nil {
 									return templ_7745c5c3_Err
 								}
@@ -871,7 +871,7 @@ func layout(p PageVM) templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "aside", Class: "hidden w-64 lg:block"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var41), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "aside", Class: "hidden lg:col-span-1 lg:block"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var41), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -911,7 +911,7 @@ func layout(p PageVM) templ.Component {
 								}()
 							}
 							ctx = templ.InitializeContext(ctx)
-							templ_7745c5c3_Err = selectx.Select(selectx.SelectProps{Name: "to", Value: p.Current, Options: mobileNav(p.Nav), Class: uiutils.Cn(selectClass, "w-full"), Attrs: templ.Attributes{"aria-label": "Go to"}}).Render(ctx, templ_7745c5c3_Buffer)
+							templ_7745c5c3_Err = selectx.Select(selectx.SelectProps{Name: "to", Value: p.Current, Options: mobileNav(p.Nav), Class: uiutils.Cn(selectClass(), "w-full"), Attrs: templ.Attributes{"aria-label": "Go to"}}).Render(ctx, templ_7745c5c3_Buffer)
 							if templ_7745c5c3_Err != nil {
 								return templ_7745c5c3_Err
 							}
@@ -1092,13 +1092,13 @@ func layout(p PageVM) templ.Component {
 					}
 					return nil
 				})
-				templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "main", Class: "flex min-w-0 flex-1 flex-col gap-6"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var43), templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "main", Class: "flex min-w-0 flex-col gap-6 lg:col-span-3"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var43), templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				return nil
 			})
-			templ_7745c5c3_Err = box.Box(box.BoxProps{Class: "mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 lg:flex-row"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var40), templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = box.Box(box.BoxProps{Class: "mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 lg:grid lg:grid-cols-4"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var40), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -2416,7 +2416,7 @@ func dataTable(t Table) templ.Component {
 										}
 										return nil
 									})
-									templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "td", Class: "px-2 py-2 align-middle max-w-xs truncate"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var122), templ_7745c5c3_Buffer)
+									templ_7745c5c3_Err = box.Box(box.BoxProps{Tag: "td", Class: "px-2 py-2 align-middle max-w-sm truncate"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var122), templ_7745c5c3_Buffer)
 									if templ_7745c5c3_Err != nil {
 										return templ_7745c5c3_Err
 									}
@@ -2673,7 +2673,7 @@ func fieldView(f Field) templ.Component {
 						}
 						return nil
 					})
-					templ_7745c5c3_Err = label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var136), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass()}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var136), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -2741,7 +2741,7 @@ func fieldView(f Field) templ.Component {
 						}
 						return nil
 					})
-					templ_7745c5c3_Err = label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var140), templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = label.Label(label.LabelProps{For: "f-" + f.Name, Class: labelClass()}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var140), templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -2779,22 +2779,22 @@ func fieldView(f Field) templ.Component {
 				}
 				switch f.Kind {
 				case "enum", "ref", "select":
-					templ_7745c5c3_Err = selectx.Select(selectx.SelectProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Options: selOpts(f), Required: f.Required, Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: selectClass}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = selectx.Select(selectx.SelectProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Options: selOpts(f), Required: f.Required, Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name}, Class: selectClass()}).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 				case "json", "textarea":
-					templ_7745c5c3_Err = textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass, "text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false", "data-code": "true"}}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = textarea.Textarea(textarea.TextareaProps{ID: "f-" + f.Name, Name: f.Name, Value: f.Value, Rows: strconv.Itoa(rowsFor(f)), Class: uiutils.Cn(textareaClass(), "text-xs"), Placeholder: jsonPlaceholder(f), Attrs: templ.Attributes{"aria-describedby": "d-" + f.Name, "spellcheck": "false", "data-code": "true"}}).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 				case "readonly":
-					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Value: optStr(f.Value), Disabled: true, Class: controlClass}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Value: optStr(f.Value), Disabled: true, Class: controlClass()}).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
 				default:
-					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: optStr(f.Value), Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = input.Input(input.InputProps{ID: "f-" + f.Name, Name: f.Name, Type: inputType(f), Value: optStr(f.Value), Required: f.Required, Placeholder: placeholder(f), Attrs: mergeAttrs(inputAttrs(f), templ.Attributes{"autocomplete": autoc(f)}), Class: controlClass()}).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
