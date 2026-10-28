@@ -22,7 +22,7 @@
 ### История
 
 - В истории `authfly/cli` своего IdP никогда не было: с первого коммита `46b84a0` и в тегах `v0.4.0` / `v0.4.1` AuthFly проксирует Stalwart 0.16.
-- Более ранний PoC — `fastygo/idp` + `fastygo/oidc-hanko` (Hanko как credential store). Он до сих пор описан на authfly.vercel.app.
+- Более ранний PoC — [`fastygo/idp`](https://github.com/fastygo/idp) + [`fastygo/oidc-hanko`](https://github.com/fastygo/oidc-hanko) (Hanko как credential store). Он до сих пор описан на authfly.vercel.app.
 
 ### Оценка `fastygo/oidc-hanko`
 
@@ -98,7 +98,7 @@ Go + templ + UI8Kit 0.2.5, MIT, ~5.2k LOC. Не развивается с 2026-0
 
 - [ADR-0002: Приоритет — бесплатный Stalwart + AuthFly и курс для вебмастеров](0002-free-stalwart-and-webmaster-course.md)
 - [authfly/cli](https://github.com/authfly/cli): `server/core` (JMAP-клиент Stalwart, `Harden`, `init-stalwart`)
-- `fastygo/idp`, `fastygo/oidc-hanko` — ранний PoC
+- [fastygo/idp](https://github.com/fastygo/idp), [fastygo/oidc-hanko](https://github.com/fastygo/oidc-hanko) — ранний PoC
 - https://authfly.vercel.app — сайт; сейчас описывает старый PoC
 - `zitadel/oidc`, `ory/fosite`, `crewjam/saml`, `russellhaering/goxmldsig`, `go-webauthn/webauthn`
 - [docs/stalwart-api.md](../../docs/stalwart-api.md) — аудит JMAP management API (Enterprise-only объекты)

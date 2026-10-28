@@ -18,7 +18,7 @@
 ## Decision
 
 1. **Основа — только бесплатные (non-Pro) возможности Stalwart.** Stalwart Pro не используем и не требуем.
-2. **Продукт:** собственный authorization server с единым входом (SSO) на 8 runtimes, «под ключ». Вебмастер вместе с агентом справляются сами, без подрядчиков.
+2. **Продукт:** собственный authorization server с единым входом (SSO) на 8 runtimes (целевое состояние; сейчас SSO между RP нет — см. known limitation в Consequences), «под ключ». Вебмастер вместе с агентом справляются сами, без подрядчиков.
 3. **Модель organizations без Stalwart Pro:**
    - у каждого вебмастера своя organization: участники (members), roles, invites и OIDC clients для его сайтов;
    - пользователи лежат в одном общем пуле Stalwart;
@@ -65,7 +65,7 @@
 
 ### Прочие последствия
 
-- Нет SSO между RP «из коробки» Stalwart — единый вход обеспечивает сессия AuthFly поверх Stalwart; ограничения фиксируем в курсе честно.
+- **Known limitation (для курса):** в AuthFly 0.5.3 поверх Stalwart нет настоящего SSO между relying parties. Каждая авторизация RP проходит через `/api/auth` Stalwart и снова запрашивает пароль. Настоящий единый вход между сайтами требует, чтобы AuthFly держал собственную сессию и сам выдавал authorization codes, то есть [ADR-0001](0001-own-idp-instead-of-stalwart-issuer.md) (Deferred). В курсе это ограничение описываем явно.
 - В AuthFly появляется своя БД (organizations, memberships, invites, clients): её нужно включить в бэкапы и миграции.
 - Dev stack в этом репозитории использует Stalwart v0.16, production — 1.0.0; гайды пишем под 1.x, compat e2e нужно держать на актуальной версии [?].
 - Возврат к [ADR-0001](0001-own-idp-instead-of-stalwart-issuer.md) — по его триггеру (free-функций Stalwart не хватает для обязательного кейса или это нужно курсу/продукту).
