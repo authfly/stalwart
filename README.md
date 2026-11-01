@@ -30,7 +30,7 @@ bun install
 bash tools/e2e-compat.sh <deploy dir>   # or the dev stack: docker compose up -d --build && bash tools/e2e-compat.sh
 ```
 
-MIT, © Auth Fly
+Apache-2.0, © Authfly
 
 ## UI (UI8Kit 3)
 
