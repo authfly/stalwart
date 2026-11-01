@@ -3,7 +3,7 @@
 A private configurator for Stalwart and Authfly (`apps/console`, Go and templ, built from the UI8Kit 3 templ primitives in authfly/authkit). It listens on `127.0.0.1:4500` only; see [Security](https://github.com/authfly/cli/blob/main/docs/security.md) for the SSH tunnel.
 
 ```sh
-docker compose up -d --build                     # includes the console
+cp .env.example .env && docker compose up -d --build                  # includes the console
 ssh -N -L 4500:127.0.0.1:4500 you@your-server    # on a remote server
 open http://localhost:4500                       # sign in with CONSOLE_ADMIN
 ```

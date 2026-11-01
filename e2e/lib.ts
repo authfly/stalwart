@@ -3,7 +3,7 @@ export const AUTHFLY = process.env.AUTHFLY_URL ?? "http://localhost:4000";
 export const STALWART = process.env.STALWART_URL ?? "http://localhost:8080";
 export const CONSOLE = process.env.CONSOLE_URL ?? "http://localhost:4500";
 export const DOMAIN = process.env.AUTHFLY_DOMAIN ?? "authfly.test";
-export const ADMIN = process.env.STALWART_ADMIN ?? "admin:authfly-dev-admin";
+export const ADMIN = process.env.STALWART_ADMIN ?? "admin:dev-only-stalwart-password";
 export const CONSOLE_ADMIN = process.env.CONSOLE_ADMIN ?? "console:dev-only-console-password";
 
 /** management JMAP as the Stalwart admin (to verify what the console and Authfly did) */

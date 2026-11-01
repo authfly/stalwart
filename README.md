@@ -27,7 +27,7 @@ repo imports it (`github.com/authfly/cli/server/core`, pinned in `deps.lock`). R
 bash tools/deps.sh                      # .deps/cli + .deps/authkit at the pinned commits
 go build ./... && go vet ./... && go test ./...
 bun install
-bash tools/e2e-compat.sh <deploy dir>   # or the dev stack: docker compose up -d --build && bash tools/e2e-compat.sh
+bash tools/e2e-compat.sh <deploy dir>   # or the dev stack: cp .env.example .env && docker compose up -d --build && bash tools/e2e-compat.sh
 ```
 
 Apache-2.0, © Authfly

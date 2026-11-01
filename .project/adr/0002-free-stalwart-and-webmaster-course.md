@@ -7,7 +7,7 @@
 
 ## Context
 
-- AuthFly 0.5.3 работает как оболочка над Stalwart 1.0.0 (`accounts.yself.link`). Stalwart отвечает за account store и OIDC issuer, AuthFly проксирует OIDC endpoints.
+- AuthFly 0.5.3 работает как оболочка над Stalwart 1.0.0 (`accounts.example.com`). Stalwart отвечает за account store и OIDC issuer, AuthFly проксирует OIDC endpoints.
 - Multi-tenancy и часть объектов Stalwart (`x:Metric`, `x:Trace`, `x:ArchivedItem`, `x:MaskedEmail`) доступны только в Pro/Enterprise (см. [docs/stalwart-api.md](../../docs/stalwart-api.md)).
 - Альтернатива — собственный IdP ([ADR-0001](0001-own-idp-instead-of-stalwart-issuer.md)). Она дорогая и рискованная (crypto, миграция, conformance), поэтому отложена.
 

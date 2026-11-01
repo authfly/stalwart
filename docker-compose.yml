@@ -10,7 +10,7 @@ services:
     image: stalwartlabs/stalwart:v0.16
     environment:
       # Pinned recovery admin (stalw.art/docs/configuration/recovery-mode). Used only by stalwart-init and the Console.
-      STALWART_RECOVERY_ADMIN: admin:${STALWART_ADMIN_PASSWORD:-authfly-dev-admin}
+      STALWART_RECOVERY_ADMIN: admin:${STALWART_ADMIN_PASSWORD:?required}
       # Public URL = the OIDC issuer. Relying parties reach the OIDC endpoints through Authfly, so it is Authfly's URL.
       STALWART_PUBLIC_URL: http://localhost:4000
     volumes:
@@ -31,10 +31,10 @@ services:
     restart: "no"
     environment: &authfly-common
       STALWART_URL: http://stalwart:8080
-      STALWART_ADMIN: admin:${STALWART_ADMIN_PASSWORD:-authfly-dev-admin}
+      STALWART_ADMIN: admin:${STALWART_ADMIN_PASSWORD:?required}
       AUTHFLY_DOMAIN: authfly.test
       AUTHFLY_PUBLIC_URL: http://localhost:4000
-      AUTHFLY_SERVICE_PASSWORD: ${AUTHFLY_SERVICE_PASSWORD:-dev-only-service-password-0123}
+      AUTHFLY_SERVICE_PASSWORD: ${AUTHFLY_SERVICE_PASSWORD:?required}
       AUTHFLY_CLIENTS: '[{"id":"demo-react","name":"Demo app (React)","redirect_uris":["http://localhost:5173/callback"]},{"id":"adapters","name":"Adapter test","redirect_uris":["http://localhost:9999/callback"]}]'
   authfly:
     build: { context: ., dockerfile: deploy/authfly.Dockerfile }
@@ -43,8 +43,8 @@ services:
     environment:
       <<: *authfly-common
       # least privilege: the service account created by stalwart-init, not the admin
-      STALWART_ADMIN: authfly-svc@authfly.test:${AUTHFLY_SERVICE_PASSWORD:-dev-only-service-password-0123}
-      AUTHFLY_SECRET: ${AUTHFLY_SECRET:-dev-only-secret-change-me-0123456789abcdef}
+      STALWART_ADMIN: authfly-svc@authfly.test:${AUTHFLY_SERVICE_PASSWORD:?required}
+      AUTHFLY_SECRET: ${AUTHFLY_SECRET:?required}
       AUTHFLY_PRODUCT: Authfly
       AUTHFLY_SOCIAL_STUBS: "false"
       SMTP_ADDR: stalwart:25
@@ -52,7 +52,7 @@ services:
       AUTHFLY_AUDIT_RETENTION: 8760h       # GDPR retention of the audit log (docs/gdpr.md)
       # internal admin API for the Console: compose network only, no port mapping
       AUTHFLY_ADMIN_ADDR: ":4001"
-      AUTHFLY_ADMIN_KEY: ${AUTHFLY_ADMIN_KEY:-dev-only-admin-key-0123456789abcdef}
+      AUTHFLY_ADMIN_KEY: ${AUTHFLY_ADMIN_KEY:?required}
     volumes:
       - authfly-data:/data
     ports:
@@ -65,13 +65,13 @@ services:
     environment:
       CONSOLE_ADDR: ":4500"
       STALWART_URL: http://stalwart:8080
-      STALWART_ADMIN: admin:${STALWART_ADMIN_PASSWORD:-authfly-dev-admin}
+      STALWART_ADMIN: admin:${STALWART_ADMIN_PASSWORD:?required}
       AUTHFLY_ADMIN_URL: http://authfly:4001
-      AUTHFLY_ADMIN_KEY: ${AUTHFLY_ADMIN_KEY:-dev-only-admin-key-0123456789abcdef}
+      AUTHFLY_ADMIN_KEY: ${AUTHFLY_ADMIN_KEY:?required}
       AUTHFLY_DOMAIN: authfly.test
       AUTHFLY_PUBLIC_URL: http://localhost:4000
-      CONSOLE_ADMIN: ${CONSOLE_ADMIN:-console:dev-only-console-password}
-      CONSOLE_SECRET: ${CONSOLE_SECRET:-dev-only-console-secret-0123456789abcdef}
+      CONSOLE_ADMIN: ${CONSOLE_ADMIN:?required}
+      CONSOLE_SECRET: ${CONSOLE_SECRET:?required}
       CONSOLE_DATA: /data
     volumes:
       - console-data:/data

@@ -13,7 +13,7 @@
 
 ### Текущая архитектура
 
-- AuthFly 0.5.3 — оболочка над Stalwart 1.0.0 на `accounts.yself.link`.
+- AuthFly 0.5.3 — оболочка над Stalwart 1.0.0 на `accounts.example.com`.
 - Stalwart выполняет роль account store и OIDC issuer: подпись токенов ES256, PKCE S256.
 - AuthFly проксирует discovery, token, userinfo, jwks, revoke и logout.
 - Multi-tenancy в Stalwart доступна только в Pro (Enterprise).
@@ -63,7 +63,7 @@ Go + templ + UI8Kit 0.2.5, MIT, ~5.2k LOC. Не развивается с 2026-0
   - SAML — `crewjam/saml` + `russellhaering/goxmldsig`;
   - passkeys — `go-webauthn/webauthn`;
   - хранилище — Postgres (SQLite для single-node).
-- Issuer уже `accounts.yself.link`, поэтому для RP переход прозрачен: merged JWKS публикует ключи Stalwart и наши собственные ES256-ключи.
+- Issuer уже `accounts.example.com`, поэтому для RP переход прозрачен: merged JWKS публикует ключи Stalwart и наши собственные ES256-ключи.
 
 ### Фазы
 
@@ -107,14 +107,14 @@ Go + templ + UI8Kit 0.2.5, MIT, ~5.2k LOC. Не развивается с 2026-0
 
 Коммиты `authfly/cli` (main): [30890ab](https://github.com/authfly/cli/commit/30890ab), [5557c87](https://github.com/authfly/cli/commit/5557c87), [0cea735](https://github.com/authfly/cli/commit/0cea735).
 
-- `server/idp` на `github.com/zitadel/oidc/v3` (`pkg/op`): AuthFly — issuer `https://accounts.yself.link` (discovery, authorize, token, userinfo, jwks, revoke, introspect, end_session) на прежних путях, RP менять не пришлось.
+- `server/idp` на `github.com/zitadel/oidc/v3` (`pkg/op`): AuthFly — issuer `https://accounts.example.com` (discovery, authorize, token, userinfo, jwks, revoke, introspect, end_session) на прежних путях, RP менять не пришлось.
 - Ключи: собственный ES256 KeySet (первый ключ подписывает, все публикуются; готово к ротации). Ключи Stalwart в JWKS больше нет. Секрет — `/root/secrets/authfly-idp-es256.pem` на хосте (600), копия в контейнере `/etc/authfly/secrets/idp-es256.pem`.
 - Хранилище: JSON-файл (`/var/lib/authfly/idp.json`, атомарная запись) — auth requests, коды (одноразовые), access/refresh (ротация), SSO-сессии, гранты, профили; переживает рестарт.
-- Stalwart остаётся хранилищем учёток: пароль (+TOTP через `mfaRequired`) проверяется адаптером `POST /api/auth` (клиент `authfly-portal`); профиль — admin JMAP. `sub` = OIDC-subject Stalwart (wmaster = `2`), маппинг RP не изменился. IP AuthFly (`10.10.10.125/32`) добавлен в `x:AllowedIp` Stalwart, чтобы fail2ban не банил IdP; перебор режет rate limiter AuthFly по IP клиента.
+- Stalwart остаётся хранилищем учёток: пароль (+TOTP через `mfaRequired`) проверяется адаптером `POST /api/auth` (клиент `authfly-portal`); профиль — admin JMAP. `sub` = OIDC-subject Stalwart (<admin-account> = `2`), маппинг RP не изменился. IP AuthFly (`<authfly-host-ip>/32`) добавлен в `x:AllowedIp` Stalwart, чтобы fail2ban не банил IdP; перебор режет rate limiter AuthFly по IP клиента.
 - SSO-сессия = сессия портала (`authfly_session`, HttpOnly, Secure, SameSite=Lax, host-only) + серверная запись со списком клиентов. `prompt=none` / `prompt=login` / `max_age`, `sid` в ID token. Согласие для first-party клиентов запоминается per client (грант).
-- Logout (уточнение владельца): выход в приложении (RP-initiated `end_session`) завершает **только это приложение** (его токены в этой сессии отзываются); SSO-сессия и другие приложения живут. Выход на accounts.yself.link (или «везде» / «другие сеансы» / завершение сеанса в кабинете) удаляет SSO-сессию, отзывает её токены и рассылает OIDC Back-Channel Logout 1.0 всем приложениям сессии.
+- Logout (уточнение владельца): выход в приложении (RP-initiated `end_session`) завершает **только это приложение** (его токены в этой сессии отзываются); SSO-сессия и другие приложения живут. Выход на accounts.example.com (или «везде» / «другие сеансы» / завершение сеанса в кабинете) удаляет SSO-сессию, отзывает её токены и рассылает OIDC Back-Channel Logout 1.0 всем приложениям сессии.
 - Кабинет «Приложения / Apps» (templ + UI8Kit 3, en/ru): приложения со входом (первый/последний вход, scopes, «Отозвать» → токены + грант + back-channel), активные сеансы (устройство, IP, начало, активность, «Это устройство»), «выйти из всех других», «выйти везде». POST под CSRF.
-- `examples/rp`: `POST /auth/backchannel-logout` (подпись, iss, aud, iat, events, sid/sub, без nonce, jti), сессии по `sid`. Второй RP `test.yself.link` (клиент `test-yself-link`, unit `rp-test`, :8081).
+- `examples/rp`: `POST /auth/backchannel-logout` (подпись, iss, aud, iat, events, sid/sub, без nonce, jti), сессии по `sid`. Второй RP `test.example.com` (клиент `test-yself-link`, unit `rp-test`, :8081).
 - Откат: `AUTHFLY_IDP=off` возвращает прокси к Stalwart-issuer; снапшоты `pre-idp-20261029` (web/edge, web/site, mail/authfly, mail/stalwart), бэкапы `authfly-0.5.4.bak`, `rp-0.5.4.bak`, `*.bak-0.5.4`.
 - E2E `/root/e2e.py` на хосте: 14/14 PASS.
 
